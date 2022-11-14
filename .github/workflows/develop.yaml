@@ -1,6 +1,7 @@
 name: development build and push docker image to ghcr.io
 
 on:
+  
   push:
     branches:
       - develop
@@ -41,7 +42,7 @@ jobs:
           github_token: ${{ secrets.GHCR_ACCESS_TOKEN }}
           release_branches: develop
           tag_prefix: dev
-          custom_release_rules: Feat:minor:Features,Bug:patch:Bugs,Chore:patch:Chores,Hotfix:patch
+          custom_release_rules: feat:minor:Features,bug:patch:Bugs,chore:patch:Chores,hotfix:patch
       - name: Create a Github release
         uses: ncipollo/release-action@v1
         with:
