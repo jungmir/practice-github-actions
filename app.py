@@ -13,6 +13,10 @@ def get_status():
 def get_users():
     return JSONResponse({"user": "fake user"}, status_code=200)
 
+@app.post("/users")
+def create_user():
+    return Response(status_code=201)
+
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="0.0.0.0", reload=True)
