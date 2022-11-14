@@ -21,6 +21,10 @@ def create_user():
 def delete_user(id):
     return Response(status_code=200)
 
+@app.put("/users/{id}")
+def update_user(id):
+    return Response(status_code=200)
+
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="0.0.0.0", reload=True)
