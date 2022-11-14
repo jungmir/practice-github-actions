@@ -5,7 +5,7 @@ on:
     branches:
       - develop
     tags:
-      - "dev*"
+      - "*-dev"
   pull_request:
     branches:
       - develop
@@ -98,8 +98,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern=dev{{version}}
-            type=semver,pattern=dev{{major}}.{{minor}}
+            type=semver,prefix="dev",pattern=dev{{version}}
+            type=semver,prefix="dev",pattern=dev{{major}}.{{minor}}
             type=ref,event=branch
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
