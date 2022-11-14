@@ -44,7 +44,7 @@ jobs:
           tag_prefix: dev
           custom_release_rules: "feat:minor:Features,bug:patch:Bugs,chore:patch:Chores,hotfix:patch"
       - name: Create a Github release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.11.2
         with:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
