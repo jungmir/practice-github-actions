@@ -42,7 +42,7 @@ jobs:
           github_token: ${{ secrets.GHCR_ACCESS_TOKEN }}
           release_branches: develop
           tag_prefix: dev
-          custom_release_rules: feat:minor:Features,bug:patch:Bugs,chore:patch:Chores,hotfix:patch
+          custom_release_rules: "feat:minor:Features,bug:patch:Bugs,chore:patch:Chores,hotfix:patch"
       - name: Create a Github release
         uses: ncipollo/release-action@v1
         with:
@@ -75,7 +75,7 @@ jobs:
             type=semver,pattern=dev{{major}}.{{minor}}
             type=ref,event=branch
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: ./docker/Dockerfile
