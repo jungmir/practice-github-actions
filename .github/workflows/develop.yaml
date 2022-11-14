@@ -5,7 +5,7 @@ on:
     branches:
       - develop
     tags:
-      - "*-dev"
+      - "dev*"
   pull_request:
     branches:
       - develop
