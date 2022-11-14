@@ -1,10 +1,11 @@
 name: development build and push docker image to ghcr.io
 
 on:
-  
   push:
     branches:
       - develop
+    tags:
+      - "dev*"
   pull_request:
     branches:
       - develop
@@ -28,7 +29,7 @@ jobs:
           file: ./docker/Dockerfile
   auto-tagging:
     name: auto-tagging
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref_name == 'develop'
     runs-on: ubuntu-20.04
     needs: build
     permissions:
@@ -42,7 +43,7 @@ jobs:
           github_token: ${{ secrets.GHCR_ACCESS_TOKEN }}
           release_branches: develop
           tag_prefix: dev
-          custom_release_rules: "feat:minor:Features,bug:patch:Bugs,chore:patch:Chores,hotfix:patch"
+          custom_release_rules: "feat:minor,fix:patch,chore:patch,hotfix:patch"
       - name: Parse Change Log
         uses: ardalanamini/auto-changelog@v3
         id: changelog
