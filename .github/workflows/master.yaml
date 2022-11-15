@@ -1,12 +1,12 @@
-name: development build and push docker image to ghcr.io
+name: Release build and push docker image to ghcr.io
 
 on:
   push:
     tags:
-      - "*develop"
+      - "v*"
   pull_request:
     branches:
-      - develop
+      - master
 
 env:
   REGISTRY: ghcr.io
