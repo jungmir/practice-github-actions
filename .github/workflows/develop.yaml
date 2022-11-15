@@ -27,6 +27,7 @@ jobs:
           file: ./docker/Dockerfile
   push:
     name: push-image
+    if: github.event_name == 'push'
     runs-on: ubuntu-20.04
     needs: build
     permissions:
@@ -54,6 +55,6 @@ jobs:
         with:
           context: .
           file: ./docker/Dockerfile
-          push: ${{ github.event_name == 'push' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
