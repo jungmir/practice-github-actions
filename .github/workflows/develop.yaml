@@ -3,7 +3,7 @@ name: Development Build and Push
 on:
   push:
     tags:
-      - "*develop"
+      - "*develop*"
   pull_request:
     branches:
       - develop
