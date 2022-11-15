@@ -22,6 +22,7 @@ jobs:
           tag_prefix: v
           release_branches: master
           pre_release_branches: develop
+          append_to_pre_release_tag: ${{ github.ref_name }}
           custom_release_rules: "feat:minor,fix:patch,chore:patch,hotfix:patch"
       - name: Parse Change Log
         if: github.ref_name == 'master'
