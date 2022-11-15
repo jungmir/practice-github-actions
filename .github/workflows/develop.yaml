@@ -1,9 +1,11 @@
-name: development build and push docker image to ghcr.io
+name: Development Build and Push
 
 on:
   push:
     tags:
-      - "*develop"
+      - "dev*"
+    branches:
+      - develop
   pull_request:
     branches:
       - develop
@@ -13,23 +15,9 @@ env:
   IMAGE_NAME: ${{ github.repository }}/practice-api
 
 jobs:
-  build:
-    name: build
+  build-and-push:
+    name: build and push
     runs-on: ubuntu-20.04
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./docker/Dockerfile
-  push:
-    name: push-image
-    if: github.event_name == 'push'
-    runs-on: ubuntu-20.04
-    needs: build
     permissions:
       contents: read
       packages: write
@@ -47,9 +35,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,prefix=dev,pattern={{version}}
-            type=semver,prefix=dev,pattern={{major}}.{{minor}}
             type=ref,event=branch
+            type=ref,event=tag
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -58,3 +45,20 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  auto-tagging:
+    name: auto-tagging
+    if: github.event_name == 'push' && github.ref_name == 'develop'
+    needs: build-and-push
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GHCR_ACCESS_TOKEN }}
+          tag_prefix: dev
+          release_branches: develop
+          custom_release_rules: "feat:minor,fix:patch,chore:patch,hotfix:patch"
