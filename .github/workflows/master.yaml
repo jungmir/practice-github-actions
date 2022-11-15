@@ -27,6 +27,7 @@ jobs:
   auto-tagging:
     name: auto-tagging
     runs-on: ubuntu-20.04
+    if: github.ref_name == "master"
     permissions:
       contents: write
     steps:
