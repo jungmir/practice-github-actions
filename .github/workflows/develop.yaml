@@ -48,7 +48,7 @@ jobs:
   auto-tagging:
     name: auto-tagging
     if: github.event_name == 'push' && github.ref_name == 'develop'
-    needs: build
+    needs: build-and-push
     runs-on: ubuntu-20.04
     permissions:
       contents: write
