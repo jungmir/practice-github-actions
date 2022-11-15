@@ -1,12 +1,12 @@
-name: development build and push docker image to ghcr.io
+name: Release build and push docker image to ghcr.io
 
 on:
   push:
     tags:
-      - "*develop"
+      - "v*"
   pull_request:
     branches:
-      - develop
+      - master
 
 env:
   REGISTRY: ghcr.io
@@ -27,7 +27,6 @@ jobs:
           file: ./docker/Dockerfile
   push:
     name: push-image
-    if: github.event_name == 'push'
     runs-on: ubuntu-20.04
     needs: build
     permissions:
@@ -55,6 +54,6 @@ jobs:
         with:
           context: .
           file: ./docker/Dockerfile
-          push: true
+          push: ${{ github.event_name == 'push' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
