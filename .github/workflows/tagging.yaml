@@ -1,4 +1,4 @@
-name: Release build and push docker image to ghcr.io
+name: auto-tagging
 
 on:
   push:

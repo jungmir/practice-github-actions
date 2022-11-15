@@ -1,4 +1,4 @@
-name: development build and push docker image to ghcr.io
+name: Development Build and Push
 
 on:
   push:
