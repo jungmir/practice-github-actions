@@ -50,6 +50,7 @@ jobs:
     name: auto-tagging
     runs-on: ubuntu-20.04
     if: github.ref_name == 'master' && github.event_name == 'push'
+    needs: build-and-push
     permissions:
       contents: write
     steps:
