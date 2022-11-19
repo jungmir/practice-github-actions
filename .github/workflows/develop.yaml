@@ -2,8 +2,8 @@ name: Development Build and Push
 
 on:
   push:
-    tags:
-      - "dev*"
+    tags-ignore:
+      - "v*"
     branches:
       - develop
   pull_request:
